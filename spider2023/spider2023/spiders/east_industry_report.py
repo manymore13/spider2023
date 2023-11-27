@@ -2,6 +2,7 @@
 import json
 import re
 import time
+import os
 
 import scrapy
 from scrapy import Request
@@ -56,7 +57,7 @@ class EastIndustryReportSpider(scrapy.Spider):
             pdfUrl = self.report_info_url + report['infoCode']
             report = Report(title=title, orgSName=orgSName, publishDate=publishDate,
                             industryName=industryName, pdfUrl=pdfUrl)
-            report['table_name'] = self.industry_code_dic[response.meta['req_industry_code']]
+            report['tableName'] = self.industry_code_dic[response.meta['req_industry_code']]
             print('pdf_url= ' + pdfUrl)
             yield Request(url=pdfUrl, callback=self.parse_pdf, cb_kwargs={'report': report}, dont_filter=True)
 
@@ -67,6 +68,11 @@ class EastIndustryReportSpider(scrapy.Spider):
 
     @classmethod
     def load_industry(cls):
+        import os
+        # print(os.getcwd())  # 获得当前工作目录
+        # print(os.path.abspath('.'))  # 获得当前工作目录
+        # print(os.path.abspath('..'))  # 获得当前工作目录的父目录
+        # print(os.path.abspath(os.curdir)) # 获得当前工作目录
         file_name = './industry.json'
         with open(file_name, 'r', encoding='utf-8') as f:
             industry_name_list = json.load(f)

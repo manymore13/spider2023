@@ -16,7 +16,7 @@ class MovieItem(scrapy.Item):
 
 # 东方财务研报
 class Report(scrapy.Item):
-    table_name = scrapy.Field()
+    tableName = scrapy.Field()
     title = scrapy.Field()
     orgSName = scrapy.Field()
     publishDate = scrapy.Field()
