@@ -6,7 +6,6 @@ import time
 
 import scrapy
 from scrapy import Request
-from scrapy import cmdline
 from scrapy.http import Response
 from spider2023.items import Report
 
@@ -64,9 +63,9 @@ class EastIndustryReportSpider(scrapy.Spider):
             pdfUrl = self.report_info_url + report['infoCode']
             report = Report(title=title, orgSName=orgSName, publishDate=publishDate,
                             industryName=industryName, pdfUrl=pdfUrl)
-            # report['tableName'] = self.industry_code_dic[response.meta['req_industry_code']]
-            logging.debug('pdf_url= ' + pdfUrl)
-            yield Request(url=pdfUrl, callback=self.parse_pdf, cb_kwargs={'report': report}, dont_filter=True)
+            # logging.debug('pdf_url= ' + pdfUrl)
+            yield report
+            # yield Request(url=pdfUrl, callback=self.parse_pdf, cb_kwargs={'report': report}, dont_filter=True)
 
     def parse_pdf(self, response: Response, report: Report):
         """
@@ -90,7 +89,3 @@ class EastIndustryReportSpider(scrapy.Spider):
         return industry_code_dic
 
 
-if __name__ == '__main__':
-    args = ('scrapy crawl -O east.json -a codes=1045,1046 -a page_size=2 -a begin_time=2023-12-18 -a '
-            'end_time=2023-12-19 -a page_no=1 east_industry_report').split()
-    cmdline.execute(args)

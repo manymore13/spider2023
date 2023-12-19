@@ -24,7 +24,7 @@ CONCURRENT_REQUESTS = 32
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 CONCURRENT_REQUESTS_PER_DOMAIN = 16
 CONCURRENT_REQUESTS_PER_IP = 16
@@ -63,7 +63,8 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # "spider2023.pipelines.ExcelPipeline": 300,
-    "spider2023.pipeline.json.JsonPipeline": 301
+    "spider2023.pipeline.json.JsonPipeline": 301,
+    "spider2023.pipeline.csv.CsvPipeline": 302
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
