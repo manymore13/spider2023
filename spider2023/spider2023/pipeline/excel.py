@@ -10,6 +10,8 @@ from itemadapter import ItemAdapter
 import openpyxl
 from openpyxl.styles import Alignment, Font, Color, GradientFill, PatternFill
 
+from spider2023.spider2023.items import Report
+
 
 class ExcelPipeline:
     title = ('研报名称', '机构名称', '发布时间', '行业', '研报地址')
@@ -22,7 +24,10 @@ class ExcelPipeline:
         self.wb.save('行业研报.xlsx')
 
     def process_item(self, item, spider):
-        sheet_name = item['tableName']
+        if not isinstance(item, Report):
+            return item
+
+        sheet_name = item['industryName']
         cur_sheet = None
         if sheet_name not in self.wb.sheetnames:
             self.create_sheet(sheet_name)
